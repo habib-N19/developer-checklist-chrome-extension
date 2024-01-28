@@ -49,6 +49,12 @@ export default defineConfig({
     reportCompressedSize: isProduction,
     emptyOutDir: !isDev,
     rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes(`"use client"`)) {
+          return;
+        }
+        warn(warning);
+      },
       input: {
         devtools: resolve(pagesDir, 'devtools', 'index.html'),
         panel: resolve(pagesDir, 'panel', 'index.html'),
@@ -56,7 +62,7 @@ export default defineConfig({
         background: resolve(pagesDir, 'background', 'index.ts'),
         contentStyle: resolve(pagesDir, 'content', 'style.scss'),
         popup: resolve(pagesDir, 'popup', 'index.html'),
-        newtab: resolve(pagesDir, 'newtab', 'index.html'),
+
         options: resolve(pagesDir, 'options', 'index.html'),
         sidepanel: resolve(pagesDir, 'sidepanel', 'index.html'),
       },

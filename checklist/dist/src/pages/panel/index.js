@@ -1,0 +1,1 @@
+import{j as n,c as r}from"../../../assets/js/client.QdM0W8C_.js";import"../../../assets/js/_commonjsHelpers.5-cIlDoe.js";const e=()=>n.jsx("div",{className:"container",children:n.jsx("h1",{className:"",children:"Dev Tools Panel"})});function t(){const o=document.querySelector("#app-container");if(!o)throw new Error("Can not find #app-container");r(o).render(n.jsx(e,{}))}t();
