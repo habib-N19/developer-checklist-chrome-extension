@@ -116,7 +116,7 @@ function checkStoragePermission(storageType: StorageType): void {
 /**
  * Creates a storage area for persisting and exchanging data.
  */
-export function createStorage<D>(key: string, fallback: D, config?: StorageConfig): BaseStorage<D> {
+export function createStorage<D>(key: string, fallback: D, config?: StorageConfig, initialState?: D): BaseStorage<D> {
   let cache: D | null = null;
   let listeners: Array<() => void> = [];
   const storageType = config?.storageType ?? StorageType.Local;
@@ -165,7 +165,7 @@ export function createStorage<D>(key: string, fallback: D, config?: StorageConfi
   };
 
   _getDataFromStorage().then(data => {
-    cache = data;
+    cache = data || initialState;
     _emitChange();
   });
 

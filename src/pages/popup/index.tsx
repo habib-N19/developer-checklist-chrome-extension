@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { ChakraProvider } from '@chakra-ui/react';
 refreshOnUpdate('pages/popup');
+// import { PersistGate } from 'redux-persist/integration/react';
 
 function init() {
   const appContainer = document.querySelector('#app-container');
@@ -18,9 +19,11 @@ function init() {
   const root = createRoot(appContainer);
   root.render(
     <Provider store={store}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
       <ChakraProvider>
         <Popup />
       </ChakraProvider>
+      {/* </PersistGate> */}
     </Provider>,
   );
 }
