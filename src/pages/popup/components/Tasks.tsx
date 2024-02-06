@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { completedTasksCount, loadDataFromLocalStorage, toggleComplete } from '../redux/features/rootTasksSlice';
+import {
+  completedTasksCount,
+  loadDataFromLocalStorage,
+  markAllAsComplete,
+  markAllAsIncomplete,
+  toggleComplete,
+} from '../redux/features/rootTasksSlice';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -7,8 +13,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { useState, useEffect } from 'react';
-import PdfModal from './PdfModal';
 import { TTask } from '../Types/tasksTypes';
+import LeftArrow from '../ui/LeftArrow';
+import RightArrow from '../ui/RightArrow';
+
+import SelectAll from '../ui/SelectAll';
+import DeSelectAll from '../ui/DeSelectAll';
+import PdfModal from './PdfModal';
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 
 const Tasks = () => {
   const [swiper, setSwiper] = useState(null);
@@ -30,14 +42,21 @@ const Tasks = () => {
     dispatch(toggleComplete({ topicTitle, taskTitle, isComplete }));
     dispatch(completedTasksCount());
   };
-  console.log('after toggle post state', tasks.initialStateData[0]);
-  console.log('count after update', count);
-  console.log(tasks.initialStateData[0].tasks[0].isComplete);
-
+  const handleSelectAll = (topicTitle: string) => {
+    dispatch(markAllAsComplete({ topicTitle }));
+    dispatch(completedTasksCount());
+  };
+  const handleDeSelectAll = (topicTitle: string) => {
+    dispatch(markAllAsIncomplete({ topicTitle }));
+    dispatch(completedTasksCount());
+  };
+  // console.log('after toggle post state', tasks.initialStateData[0]);
+  // console.log('count after update', count);
+  // console.log(tasks.initialStateData[0].tasks[0].isComplete);
   const totalTasks = tasks.initialStateData?.reduce((acc, task) => acc + task.tasks.length, 0);
-  console.log('totalTasks', totalTasks);
-  const progress = totalTasks > 0 ? (count / totalTasks) * 100 : 0;
-  console.log('progress', progress);
+  // console.log('totalTasks', totalTasks);
+  const progress = Math.round(totalTasks > 0 ? (count / totalTasks) * 100 : 0);
+  // console.log('progress', progress);
   const prevHandler = () => {
     if (swiper) {
       swiper.slidePrev();
@@ -53,39 +72,8 @@ const Tasks = () => {
   };
 
   return (
-    <div className="max-w-lg w-full mx-auto mt-6 space-y-1">
-      <div className="w-full">
-        <PdfModal></PdfModal>
-        <div className="relative flex justify-between">
-          <button title="previous" onClick={prevHandler} className="btn btn-primary w-44">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-            </svg>
-          </button>
-          <button onClick={nextHandler} title="next topic" className=" inline-flex justify-end btn btn-primary w-44">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
-          </button>
-        </div>
-        <div className="swiper-pagination absolute top-0"></div>
-      </div>
-      <p>
-        {tasks.initialStateData[0].tasks[0].isComplete ? '' : ''} {count}
-      </p>
-      <div className="py-6">
+    <div className="relative max-w-lg w-full mx-auto space-y-1">
+      <div className="">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={20}
@@ -101,9 +89,37 @@ const Tasks = () => {
           {tasks.initialStateData?.map((tasks: TTask, index) => {
             return (
               <SwiperSlide key={index}>
-                <div key={index} className="mt-3 w-full">
-                  <h3 className="text-2xl mb-3 font-bold">{tasks.title}</h3>
-                  <h4 className=" mb-3 text-sm text-gray-500 font-semibold">{tasks.subtitle}</h4>
+                <div key={index} className="w-full">
+                  <div className="relative flex mb-2 w-full justify-between items-center">
+                    <button title="previous" onClick={prevHandler} className="btn btn-primary">
+                      <LeftArrow />
+                    </button>
+                    <h3 className="text-center text-xl font-semibold">{tasks.title}</h3>
+                    <button
+                      onClick={nextHandler}
+                      title="next topic"
+                      className="inline-flex justify-end btn btn-primary">
+                      <RightArrow />
+                    </button>
+                    {/* <div className="swiper-pagination absolute top-0"></div> */}
+                  </div>
+                  <div className="px-8 py-2 "></div>
+                  <h4 className="text-center mb-3 text-sm text-gray-500 font-semibold">{tasks.subtitle}</h4>
+                  {/* top nav of slider */}
+                  <div className="flex w-full gap-2 items-center ">
+                    <button onClick={() => handleSelectAll(tasks.title)} className="flex gap-1 items-center">
+                      <SelectAll />
+                      <p>Select All</p>
+                    </button>
+                    <button className="flex gap-1 items-center" onClick={() => handleDeSelectAll(tasks.title)}>
+                      <DeSelectAll />
+                      <p>Deselect All</p>
+                    </button>
+
+                    <div className="justify-self-end ml-auto w-fit">
+                      <PdfModal />
+                    </div>
+                  </div>
                   <div className="pb-6 space-y-3">
                     {tasks.tasks.map((task, i) => {
                       return (
@@ -111,22 +127,16 @@ const Tasks = () => {
                           <input
                             type="checkbox"
                             checked={task?.isComplete}
-                            onClick={() => {
-                              // console.log('uporer console', task.isComplete);
+                            onChange={() => {
                               handleToggleComplete(tasks.title, task.taskTitle, task.isComplete ? true : false);
-                              // console.log('inside checkbox', task.isComplete);
                             }}
                             key={i}
                             style={{
                               minHeight: '24px',
                               minWidth: '24px',
+                              borderRadius: '29px',
                             }}
-                            className="rounded-md border-gray-300 
-                                         text-indigo-600 cursor-pointer
-                                         focus:ring-2 
-                                         hover:ring-indigo-500
-                                         hover:text-indigo-600
-                                         "
+                            className="rounded-lg bg-[#136DF5]"
                           />
                           <div className="">
                             <h2 className="text-base font-semibold">{task.taskTitle}</h2>
@@ -141,6 +151,11 @@ const Tasks = () => {
             );
           })}
         </Swiper>
+      </div>
+      <div className="fixed right-2 bottom-3">
+        <CircularProgress value={progress} color="#136DF5">
+          <CircularProgressLabel>{progress} %</CircularProgressLabel>
+        </CircularProgress>
       </div>
     </div>
   );

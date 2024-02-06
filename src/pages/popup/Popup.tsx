@@ -1,43 +1,28 @@
-import React from 'react';
-// import logo from '@assets/img/logo.svg';
 import '@pages/popup/Popup.css';
-// import useStorage from '@src/shared/hooks/useStorage';
-// import exampleThemeStorage from '@src/shared/storages/exampleThemeStorage';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import Logo from './ui/Logo';
-// import Tasks from './components/Tasks';
-// import Download from './ui/Download';
-// import { PDFDownloadLink } from '@react-pdf/renderer';
-// import TasksPdfConverter from './components/TasksPdfConverter';
 import TasksTab from './components/TasksTab';
+import Return from './ui/Return';
+import Settings from './ui/Settings';
 
 const Popup = () => {
   // const theme = useStorage(exampleThemeStorage);
 
   return (
-    <div className="main__body ">
-      <div className="main__nav shadow-lg">
-        <div>
-          <h2 className="text-2xl font-bold ">Developer Checklist</h2>
-          <p className="">
-            A product by{' '}
-            <a
-              className="text-blue-300 hover:text-blue-400 "
-              href="https://www.ideapeel.com/"
-              target="_blank"
-              title="ideapeel.com"
-              rel="noreferrer">
-              ideapeel
-            </a>{' '}
-          </p>
+    <div className="">
+      <div className="px-4 border-b border-b-[#ECEEFC] py-3 flex justify-between w-full">
+        <div className="flex first:gap-2 last:gap-0.5  items-center">
+          <Return />
+          <a href="https://www.ideapeel.com/" target="_blank" title="ideapeel" rel="noreferrer">
+            <Logo />
+          </a>
+          <h2 className="text-sm font-semibold ">Webflow Checklist</h2>
         </div>
-        <a href="https://www.ideapeel.com/" target="_blank" title="ideapeel" rel="noreferrer">
-          <Logo />
-        </a>
+        <Settings />
       </div>
 
-      <div className="mt-6">
+      <div className="px-4 pt-4">
         <TasksTab></TasksTab>
       </div>
     </div>

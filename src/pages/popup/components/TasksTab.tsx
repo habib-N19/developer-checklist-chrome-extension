@@ -2,7 +2,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import Tasks from './Tasks';
 const TasksTab = () => {
   return (
-    <div className="h-fit">
+    <div className="h-fit pt-6 px-4">
       <Tabs isFitted variant="enclosed" height={'-webkit-fit-content'}>
         <TabList mb="1em" height={'-webkit-fit-content'}>
           <Tab>Webflow Developer Checklist</Tab>

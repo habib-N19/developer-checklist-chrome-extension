@@ -1,19 +1,20 @@
-import React from 'react';
-
 const Download = () => {
   return (
     <button className="text-indigo-600 ">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="w-6 h-6">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path
+          d="M21 16V16.4C21 16.9574 21 17.2361 20.9631 17.4693C20.7598 18.753 19.753 19.7598 18.4693 19.9631C18.2361 20 17.9574 20 17.4 20H6.6C6.0426 20 5.76389 20 5.5307 19.9631C4.24702 19.7598 3.24025 18.753 3.03693 17.4693C3 17.2361 3 16.9574 3 16.4V16"
+          stroke="#84868D"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+        />
+        <path
+          d="M17 12.0759L12 16M12 16L7.00002 12.0759M12 16V4"
+          stroke="#84868D"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </button>

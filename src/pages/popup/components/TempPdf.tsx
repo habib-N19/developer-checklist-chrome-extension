@@ -17,7 +17,7 @@ const TempPdf = () => {
 
   const handleGeneratePdf = () => {
     const doc = new jsPDF({ format: 'a4', unit: 'px' }) as jsPDFWithAutoTable;
-    tasksData.forEach(task => {
+    tasksData.initialStateData.forEach(task => {
       // setProjectName(task.title)
       generateTasks(doc, task.title, task.tasks);
       doc.addPage(); // Add a new page for each project

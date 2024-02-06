@@ -577,6 +577,30 @@ const rootTasksSlice = createSlice({
       });
       localStorage.setItem('rootTasks', JSON.stringify(state.initialStateData));
     },
+    markAllAsComplete: (state, action: PayloadAction<{ topicTitle: string }>) => {
+      const { topicTitle } = action.payload;
+      state.initialStateData = state.initialStateData.map((topic: TTopic) => {
+        if (topic.title === topicTitle) {
+          const updatedTasks = topic.tasks.map(task => {
+            return { ...task, isComplete: true };
+          });
+          return { ...topic, tasks: updatedTasks };
+        }
+        return topic;
+      });
+    },
+    markAllAsIncomplete: (state, action: PayloadAction<{ topicTitle: string }>) => {
+      const { topicTitle } = action.payload;
+      state.initialStateData = state.initialStateData.map((topic: TTopic) => {
+        if (topic.title === topicTitle) {
+          const updatedTasks = topic.tasks.map(task => {
+            return { ...task, isComplete: false };
+          });
+          return { ...topic, tasks: updatedTasks };
+        }
+        return topic;
+      });
+    },
     loadDataFromLocalStorage: state => {
       const localStorageData = localStorage.getItem('rootTasks');
       if (localStorageData) {
@@ -597,6 +621,13 @@ const rootTasksSlice = createSlice({
   },
 });
 
-export const { addTopic, addTask, toggleComplete, loadDataFromLocalStorage, completedTasksCount } =
-  rootTasksSlice.actions;
+export const {
+  addTopic,
+  addTask,
+  toggleComplete,
+  markAllAsComplete,
+  markAllAsIncomplete,
+  loadDataFromLocalStorage,
+  completedTasksCount,
+} = rootTasksSlice.actions;
 export default rootTasksSlice.reducer;

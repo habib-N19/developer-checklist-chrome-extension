@@ -17,7 +17,7 @@ const PdfModal = () => {
   const btnRef = useRef(null);
   return (
     <>
-      <Button mt={3} ref={btnRef} onClick={onOpen}>
+      <Button ref={btnRef} onClick={onOpen}>
         <Download />
       </Button>
       <Modal onClose={onClose} finalFocusRef={btnRef} isOpen={isOpen} scrollBehavior={'inside'}>
