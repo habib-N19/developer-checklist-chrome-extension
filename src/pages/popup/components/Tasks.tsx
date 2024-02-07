@@ -20,7 +20,7 @@ import RightArrow from '../ui/RightArrow';
 import SelectAll from '../ui/SelectAll';
 import DeSelectAll from '../ui/DeSelectAll';
 import PdfModal from './PdfModal';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
+import { Progress } from '@chakra-ui/react';
 
 const Tasks = () => {
   const [swiper, setSwiper] = useState(null);
@@ -152,10 +152,8 @@ const Tasks = () => {
           })}
         </Swiper>
       </div>
-      <div className="fixed right-2 bottom-3">
-        <CircularProgress value={progress} color="#136DF5">
-          <CircularProgressLabel>{progress} %</CircularProgressLabel>
-        </CircularProgress>
+      <div className="w-full z-100 left-0 fixed bottom-0 rounded-b">
+        <Progress value={progress}></Progress>
       </div>
     </div>
   );

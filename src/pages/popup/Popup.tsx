@@ -1,30 +1,14 @@
 import '@pages/popup/Popup.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
-import Logo from './ui/Logo';
-import TasksTab from './components/TasksTab';
-import Return from './ui/Return';
-import Settings from './ui/Settings';
+import OnBoarding from './pages/OnBoarding/OnBoarding';
 
 const Popup = () => {
   // const theme = useStorage(exampleThemeStorage);
 
   return (
-    <div className="">
-      <div className="px-4 border-b border-b-[#ECEEFC] py-3 flex justify-between w-full">
-        <div className="flex first:gap-2 last:gap-0.5  items-center">
-          <Return />
-          <a href="https://www.ideapeel.com/" target="_blank" title="ideapeel" rel="noreferrer">
-            <Logo />
-          </a>
-          <h2 className="text-sm font-semibold ">Webflow Checklist</h2>
-        </div>
-        <Settings />
-      </div>
-
-      <div className="px-4 pt-4">
-        <TasksTab></TasksTab>
-      </div>
+    <div>
+      <OnBoarding />
     </div>
   );
 };
