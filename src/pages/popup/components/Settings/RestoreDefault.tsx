@@ -1,6 +1,25 @@
-import React from 'react';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { removeFromLocalStorage } from '../../redux/features/rootTasksSlice';
 
 const RestoreDefault = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const handleRestore = () => {
+    console.log('Restore Default');
+    dispatch(removeFromLocalStorage());
+    onClose();
+  };
   return (
     <div className="flex px-8 py-4 items-center">
       <div className="flex-shrink mr-4">
@@ -17,10 +36,12 @@ const RestoreDefault = () => {
         </svg>
       </div>
       <div className="flex-grow">
-        <h3 className="font-semibold">Restore Default</h3>
+        <button onClick={onOpen} className="font-semibold">
+          Restore Default
+        </button>
         <p className="text-[#84868D]">Restore Original Setup</p>
       </div>
-      <div className="w-fit flex-shrink">
+      <button onClick={onOpen} className="w-fit flex-shrink">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
             d="M10 20L17.3301 12.9546C17.7438 12.5569 17.9507 12.358 17.9904 12.1173C18.0032 12.0396 18.0032 11.9604 17.9904 11.8827C17.9507 11.642 17.7438 11.4431 17.3301 11.0454L10 4"
@@ -30,7 +51,24 @@ const RestoreDefault = () => {
             strokeLinejoin="round"
           />
         </svg>
-      </div>
+      </button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader color={'red'}>Are you sure to delete all project?</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>Once you reset to the default, you can not undo this action.</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" variant="primary" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button onClick={handleRestore} variant="secondary">
+              Restore to default
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
