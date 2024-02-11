@@ -4,7 +4,13 @@ import Delete from '../../ui/Delete';
 import Download from '../../ui/Download';
 import StarredIcon from '../../ui/StarredIcon';
 import { useDispatch, useSelector } from 'react-redux';
-import { TProject, addNewProject, loadDataFromLocalStorage, toggleStarred } from '../../redux/features/rootTasksSlice';
+import {
+  TProject,
+  addNewProject,
+  deleteProject,
+  loadDataFromLocalStorage,
+  toggleStarred,
+} from '../../redux/features/rootTasksSlice';
 import { useState, useEffect } from 'react';
 const OnBoarding = () => {
   const [validInput, setValidInput] = useState(false);
@@ -22,7 +28,8 @@ const OnBoarding = () => {
   const handleDownload = project => {
     console.log(project);
   };
-  const handleDelete = () => {
+  const handleDelete = (projectTitle: string) => {
+    dispatch(deleteProject({ projectTitle }));
     console.log('Deleted');
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +61,8 @@ const OnBoarding = () => {
         <button
           disabled={!validInput}
           type="submit"
-          className="disabled:bg-[#136df526] bg-[#136DF5] text-white font-semibold py-3 px-8 w-full rounded-lg">
+          className="disabled:bg-[#136df526] bg-[#136DF5] text-white font-semibold py-3 px-8 w-full rounded-xl
+          ">
           Create New
         </button>
       </form>
@@ -75,7 +83,7 @@ const OnBoarding = () => {
               <button onClick={() => handleDownload(project)}>
                 <Download />
               </button>
-              <button onClick={handleDelete}>
+              <button onClick={() => handleDelete(project.projectTitle)}>
                 <Delete />
               </button>
             </div>

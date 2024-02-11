@@ -656,6 +656,11 @@ const rootTasksSlice = createSlice({
       });
       storeToLocalStorage(state.initialStateData);
     },
+    deleteProject: (state, action: PayloadAction<{ projectTitle: string }>) => {
+      const { projectTitle } = action.payload;
+      state.initialStateData = state.initialStateData.filter(project => project.projectTitle !== projectTitle);
+      storeToLocalStorage(state.initialStateData);
+    },
     loadDataFromLocalStorage: state => {
       const localStorageData = localStorage.getItem('rootTasks');
       if (localStorageData) {
@@ -697,6 +702,7 @@ export const {
   toggleComplete,
   markAllAsComplete,
   markAllAsIncomplete,
+  deleteProject,
   loadDataFromLocalStorage,
   completedTasksCount,
   toggleStarred,

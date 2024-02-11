@@ -11,11 +11,9 @@ type TTasksProps = {
 };
 
 const TempPdf = ({ project }: TTasksProps) => {
-  console.log('pdf page', project);
-
   const handleGeneratePdf = () => {
     const doc = new jsPDF({ format: 'a4', unit: 'px' }) as jsPDFWithAutoTable;
-    project.topics?.tasks.forEach((topic: TTopic) => {
+    project.topics?.forEach((topic: TTopic) => {
       generateTasks(doc, topic.title, topic.tasks);
       doc.addPage();
     });
@@ -26,13 +24,13 @@ const TempPdf = ({ project }: TTasksProps) => {
     doc.autoTable({
       startY: 50,
       head: [['Task', 'Status']],
-      body: tasks.tasks.map(task => [task.taskTitle, task.isComplete ? 'Completed' : 'Pending']),
+      body: tasks.map(task => [task.taskTitle, task.isComplete ? 'Completed' : 'Pending']),
     });
   };
 
   return (
     <div>
-      <button className="button" onClick={handleGeneratePdf}>
+      <button className="bg-[#136DF5] text-white font-semibold py-3 px-8 w-full rounded-xl" onClick={handleGeneratePdf}>
         Generate PDF
       </button>
     </div>

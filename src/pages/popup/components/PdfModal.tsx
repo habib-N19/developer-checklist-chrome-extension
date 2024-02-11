@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,24 +11,28 @@ import {
 import { useRef } from 'react';
 import Download from '../ui/Download';
 import TempPdf from './TempPdf';
-const PdfModal = () => {
+import { TTasksProps } from './Tasks';
+// import TempPdf from './TempPdf';
+const PdfModal = ({ project }: TTasksProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
   return (
     <>
-      <Button ref={btnRef} onClick={onOpen}>
+      <button ref={btnRef} onClick={onOpen}>
         <Download />
-      </Button>
-      <Modal onClose={onClose} finalFocusRef={btnRef} isOpen={isOpen} scrollBehavior={'inside'}>
+      </button>
+      <Modal onClose={onClose} finalFocusRef={btnRef} isOpen={isOpen} motionPreset="slideInBottom" size="xs">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Download Checklist As Pdf</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <TempPdf />
+            <TempPdf project={project} />
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <button className="" onClick={onClose}>
+              Close
+            </button>
           </ModalFooter>
         </ModalContent>
       </Modal>
