@@ -24,12 +24,9 @@ const Alert = () => {
         <h3 className="font-semibold">Alert</h3>
         <p className="text-[#84868D]">Important Notice</p>
       </div>
-      <div className="w-fit inline-flex items-center justify-center bg-[#F8F8F8] rounded-full mx-auto relative flex-shrink">
+      {/* <div className="w-fit inline-flex items-center justify-center bg-[#F8F8F8] rounded-full mx-auto relative flex-shrink">
         <p className=" bg-[#F96767] rounded-full p-1 w-8 h-8  text-center my-auto border text-white font-bold ">4</p>
-        {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="12" fill="#F96767" />
-                </svg> */}
-      </div>
+      </div> */}
     </div>
   );
 };

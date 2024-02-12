@@ -17,3 +17,12 @@ code {
 ::-webkit-scrollbar {
   display: none;
 }
+.light_theme {
+  color: #1d1b22;
+  background-color: white;
+}
+.dark_theme {
+  background-color: #1d1b22;
+  color: white;
+}
+/* #3A3C44 */

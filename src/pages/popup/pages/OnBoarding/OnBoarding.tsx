@@ -12,8 +12,10 @@ import {
   toggleStarred,
 } from '../../redux/features/rootTasksSlice';
 import { useState, useEffect } from 'react';
+import { PdfGenerator } from '../../utils/PdfGenerator';
 const OnBoarding = () => {
   const [validInput, setValidInput] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,11 +28,11 @@ const OnBoarding = () => {
     dispatch(toggleStarred({ projectTitle }));
   };
   const handleDownload = project => {
-    console.log(project);
+    const generatePdf = PdfGenerator({ project });
+    generatePdf();
   };
   const handleDelete = (projectTitle: string) => {
     dispatch(deleteProject({ projectTitle }));
-    console.log('Deleted');
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValidInput(e.target.value.trim().length > 0);
@@ -44,7 +46,7 @@ const OnBoarding = () => {
     navigate('/tasks');
   };
   return (
-    <div className=" max-w-[480px] mx-auto text-[#1D1B22]">
+    <div className=" max-w-[480px] mx-auto">
       <form onSubmit={handleSubmit} className=" px-[66px] py-10">
         <label htmlFor="projectName" className="font-semibold text-lg ">
           Create New Checklist
@@ -83,9 +85,11 @@ const OnBoarding = () => {
               <button onClick={() => handleDownload(project)}>
                 <Download />
               </button>
-              <button onClick={() => handleDelete(project.projectTitle)}>
-                <Delete />
-              </button>
+              {projects.initialStateData.length > 1 && (
+                <button onClick={() => handleDelete(project.projectTitle)}>
+                  <Delete />
+                </button>
+              )}
             </div>
           </div>
         ))}

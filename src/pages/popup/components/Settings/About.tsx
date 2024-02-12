@@ -9,7 +9,7 @@ const About = () => {
         </svg>
       </div>
       <div className="flex-grow">
-        <h3 className="font-semibold">About App</h3>
+        <h3 className="text-base font-semibold">About App</h3>
         <p className="text-[#84868D]">Learn More About Our App</p>
       </div>
       <div className="w-fit relative flex-shrink">

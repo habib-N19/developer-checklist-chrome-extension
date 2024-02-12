@@ -1,4 +1,20 @@
+import useStorage from '@root/src/shared/hooks/useStorage';
+import { motion, AnimatePresence } from 'framer-motion';
+import './DarkMode.css';
+import exampleThemeStorage from '@root/src/shared/storages/exampleThemeStorage';
+// import { useState } from "react";
+
 const DarkMode = () => {
+  const theme = useStorage(exampleThemeStorage);
+  console.log(theme);
+  // const [isOn, setIsOn] = useState(false);
+  // const toggleTheme = () => {
+
+  //   setIsOn(!isOn);
+
+  //   exampleThemeStorage.toggle
+  // }
+
   return (
     <div className="flex px-8 py-4 items-center">
       <div className="flex-shrink mr-4">
@@ -21,7 +37,32 @@ const DarkMode = () => {
         <h3 className="font-semibold">Dark Mode</h3>
         <p className="text-[#84868D]">Switch Theme</p>
       </div>
-      <div className="w-fit flex-shrink">
+      <button
+        className={`container_toggle ${theme === 'light' ? '' : 'container_dark'}`}
+        // data-darkmode={isOn}
+        onClick={exampleThemeStorage.toggle}
+        style={{ justifyContent: theme === 'dark' ? 'flex-end' : 'flex-start' }}>
+        <motion.div layout className="handle">
+          <AnimatePresence exitBeforeEnter initial={false}>
+            <motion.i
+              className={`icon far fa-${theme === 'light' ? 'moon' : 'sun'}`}
+              key={theme === 'light' ? 'moon' : 'sun'}
+              initial={{ y: -30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 30, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+          </AnimatePresence>
+        </motion.div>
+      </button>
+
+      {/* <button
+        // style={{
+        //   backgroundColor: theme === 'light' ? '#fff' : '#000',
+        //   color: theme === 'light' ? '#000' : '#fff',
+        // }}
+        // onClick={exampleThemeStorage.toggle}
+        className="w-fit flex-shrink">
         <svg xmlns="http://www.w3.org/2000/svg" width="52" height="32" viewBox="0 0 52 32" fill="none">
           <g clipPath="url(#clip0_98_2947)">
             <path
@@ -39,7 +80,7 @@ const DarkMode = () => {
             </clipPath>
           </defs>
         </svg>
-      </div>
+      </button> */}
     </div>
   );
 };

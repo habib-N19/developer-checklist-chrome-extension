@@ -1,8 +1,12 @@
+import useStorage from '@root/src/shared/hooks/useStorage';
+import exampleThemeStorage from '@root/src/shared/storages/exampleThemeStorage';
+
 type TCustomCheckboxProps = {
   checked: boolean;
   handleChecked?: () => void;
 };
 const CustomCheckbox = ({ checked, handleChecked }: TCustomCheckboxProps) => {
+  const theme = useStorage(exampleThemeStorage);
   return (
     <label className="flex items-center cursor-pointer">
       {/* Hidden checkbox input */}
@@ -13,7 +17,7 @@ const CustomCheckbox = ({ checked, handleChecked }: TCustomCheckboxProps) => {
         className="hidden"
       />
       {/* Custom SVG */}
-      <button className="w-6 h-6 flex items-center justify-center border rounded-md" onClick={handleChecked}>
+      <button className="w-6 h-6 flex items-center justify-center rounded-md" onClick={handleChecked}>
         {checked ? (
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <rect width="24" height="24" rx="8" fill="#136DF5" />
@@ -27,8 +31,16 @@ const CustomCheckbox = ({ checked, handleChecked }: TCustomCheckboxProps) => {
           </svg>
         ) : (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0.8" y="0.8" width="22.4" height="22.4" rx="7.2" fill="white" />
-            <rect x="0.8" y="0.8" width="22.4" height="22.4" rx="7.2" stroke="#ECEEFC" strokeWidth="1.6" />
+            <rect x="0.8" y="0.8" width="22.4" height="22.4" rx="7.2" fill={theme === 'light' ? 'white' : '#1D1B22'} />
+            <rect
+              x="0.8"
+              y="0.8"
+              width="22.4"
+              height="22.4"
+              rx="7.2"
+              stroke={theme === 'light' ? '#ECEEFC' : '#3A3C44'}
+              strokeWidth="1.6"
+            />
           </svg>
         )}
       </button>

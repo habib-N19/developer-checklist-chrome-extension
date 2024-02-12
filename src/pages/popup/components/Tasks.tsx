@@ -20,8 +20,10 @@ import SelectAll from '../ui/SelectAll';
 import DeSelectAll from '../ui/DeSelectAll';
 import Download from '../ui/Download';
 import { PdfGenerator } from '../utils/PdfGenerator';
-import PdfModal from './PdfModal';
+// import PdfModal from './PdfModal';
 import CustomCheckbox from '../ui/CustomCheckbox';
+import useStorage from '@root/src/shared/hooks/useStorage';
+import exampleThemeStorage from '@root/src/shared/storages/exampleThemeStorage';
 // import { Progress } from '@chakra-ui/react';
 export type TTasksProps = {
   project: TProject;
@@ -29,6 +31,7 @@ export type TTasksProps = {
 // : React.FC<TTasksProps>
 const Tasks = ({ project }: TTasksProps) => {
   const [swiper, setSwiper] = useState(null);
+  const theme = useStorage(exampleThemeStorage);
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const count = useSelector((state: any) => state.rootTasks.completedTasksCount);
@@ -78,7 +81,10 @@ const Tasks = ({ project }: TTasksProps) => {
     generatePdf();
   };
   return (
-    <div className="relative max-w-lg w-full mx-auto space-y-1">
+    <div
+      className={`relative pt-4 max-w-lg w-full mx-auto space-y-1 ${
+        theme === 'light' ? 'bg-white' : 'text-white bg-[#1D1B22]'
+      } `}>
       <div className="">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -95,7 +101,7 @@ const Tasks = ({ project }: TTasksProps) => {
           {project.topics?.map((topic: TTopic, index) => (
             <SwiperSlide key={index}>
               <div key={index} className="w-full">
-                <div className="relative flex pb-6 w-full justify-between items-center">
+                <div className="relative px-5 flex pb-6 w-full justify-between items-center">
                   <button title="previous" onClick={prevHandler} className="btn btn-primary">
                     <LeftArrow />
                   </button>
@@ -107,9 +113,12 @@ const Tasks = ({ project }: TTasksProps) => {
                   {/* <div className="swiper-pagination absolute top-0"></div> */}
                 </div>
                 {/* <div className="px-8 py-2 "></div> */}
-                <h4 className="text-center mb-3 text-sm text-gray-500 font-semibold">{topic.subtitle}</h4>
+                <h4 className="text-center px-5 mb-3 text-sm text-gray-500 font-semibold">{topic.subtitle}</h4>
                 {/* top nav of slider */}
-                <div className="flex border-y border-y-[#ECEEFC] py-4 mb-4  w-full gap-2 items-center ">
+                <div
+                  className={`flex px-4 border-y py-4 mb-4  w-full gap-2 items-center ${
+                    theme === 'light' ? 'border-y-[#ECEEFC]' : 'border-y-[#3A3C44]'
+                  }`}>
                   <button
                     onClick={() => handleSelectAll(project.projectTitle, topic.title)}
                     className="flex gap-1 items-center">
@@ -124,18 +133,18 @@ const Tasks = ({ project }: TTasksProps) => {
                   </button>
 
                   <div className="justify-self-end ml-auto">
-                    <button>
+                    {/* <button>
                       <PdfModal project={project} />
-                    </button>
+                    </button> */}
                     <button onClick={() => handleDownload(project)}>
                       <Download />
                     </button>
                   </div>
                 </div>
-                <div className="pb-6 px-4 space-y-3">
+                <div className="pb-6 px-8">
                   {topic.tasks.map((task, i) => {
                     return (
-                      <div key={i} className="flex gap-3 items-center">
+                      <div key={i} className="flex space-y-8 items-center">
                         {/* <input
                           type="checkbox"
                           checked={task?.isComplete}
@@ -168,20 +177,8 @@ const Tasks = ({ project }: TTasksProps) => {
                           }}
                           checked={task.isComplete}
                         />
-                        <div className="">
-                          <h4
-                            // onChange={() => {
-                            //   handleToggleComplete(
-                            //     project.projectTitle,
-                            //     topic.title,
-                            //     task.taskTitle,
-                            //     task.isComplete ? true : false,
-                            //   );
-                            // }}
-
-                            className="text-base font-semibold">
-                            {task.taskTitle}
-                          </h4>
+                        <div className="pl-4">
+                          <h4 className="text-base font-semibold">{task.taskTitle}</h4>
                           <p className="text-sm text-gray-500">{task.taskDescription}</p>
                         </div>
                       </div>
@@ -193,7 +190,7 @@ const Tasks = ({ project }: TTasksProps) => {
           ))}
         </Swiper>
       </div>
-      <div className="w-full z-100 left-0 fixed bottom-0 rounded-b">{/* <Progress value={progress}></Progress> */}</div>
+      {/* <div className="w-full z-100 left-0 fixed bottom-0 rounded-b"><Progress value={progress}></Progress></div> */}
     </div>
   );
 };

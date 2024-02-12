@@ -2,12 +2,19 @@ import '@pages/popup/Popup.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import OnBoarding from './pages/OnBoarding/OnBoarding';
+import useStorage from '@root/src/shared/hooks/useStorage';
+import exampleThemeStorage from '@root/src/shared/storages/exampleThemeStorage';
 
 const Popup = () => {
-  // const theme = useStorage(exampleThemeStorage);
+  const theme = useStorage(exampleThemeStorage);
 
   return (
-    <div>
+    <div
+      className={`${theme === 'light' ? 'bg-white text-[#1d1b22]' : 'bg-[#1d1b22] text-white'}`}
+      // style={{
+      //   backgroundColor: theme === 'light' ? '#fff' : '#000',
+      // }}
+    >
       <OnBoarding />
     </div>
   );
