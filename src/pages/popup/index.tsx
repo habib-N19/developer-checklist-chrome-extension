@@ -16,14 +16,6 @@ function init() {
   }
   attachTwindStyle(appContainer, document);
   const root = createRoot(appContainer);
-  // const theme = extendTheme({
-  //   colors: {
-  //     accent: {
-  //       100: '#136DF5',
-  //     },
-  //   },
-  // });
-
   root.render(
     <Router>
       <Provider store={store}>

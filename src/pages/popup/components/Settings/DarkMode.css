@@ -1,39 +1,29 @@
 .container_toggle {
-  height: 32px;
+  height: 28px;
   width: 52px;
-  background-image: radial-gradient(circle farthest-corner at 10% 20%, rgb(22, 19, 9) 0%, rgb(77, 5, 21) 100.2%);
-  border: #f88748;
-  border-radius: 25px;
+  background-image: radial-gradient(circle farthest-corner at 10% 20%, rgb(255, 255, 255) 0%, rgb(77, 5, 21) 100.2%);
+  border-radius: 26px;
   display: flex;
   align-items: center;
-  box-sizing: border-box;
-  /* padding: 0 5px; */
+  justify-content: center;
   cursor: pointer;
   transition: all 0.3s;
 }
+
+.container_toggle.container_dark {
+  background-color: #52527a;
+}
+
 .handle {
-  height: 30px;
-  width: 30px;
+  height: 26px;
+  width: 26px;
   border-radius: 50%;
-  display: grid;
-  align-items: center;
-  justify-items: center;
   background-color: #fff;
   overflow: hidden;
 }
+
 .icon {
   color: #f88748;
-}
-.dark {
-  background-color: #52527a;
-}
-.container_dark {
-  background-image: linear-gradient(
-    109.8deg,
-    rgb(217, 203, 230) -5.2%,
-    rgb(214, 208, 237) -5.2%,
-    rgb(244, 226, 235) 103.3%
-  );
 }
 
 .icon_dark {

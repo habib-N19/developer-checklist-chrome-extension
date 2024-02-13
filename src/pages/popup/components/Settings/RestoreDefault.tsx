@@ -55,7 +55,7 @@ const RestoreDefault = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader color={'red'}>Are you sure to delete all project?</ModalHeader>
+          <ModalHeader color={'red'}>Are you sure to delete all projects?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>Once you reset to the default, you can not undo this action.</ModalBody>
 

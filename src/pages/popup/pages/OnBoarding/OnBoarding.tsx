@@ -58,7 +58,7 @@ const OnBoarding = () => {
           required
           placeholder="Project Name"
           onChange={handleInputChange}
-          className="py-3 px-4 outline-none focus:outline-blue-300  my-4  w-full rounded-xl"
+          className="py-3 px-4 text-[#1D1B22] outline-none focus:outline-none  my-4  w-full rounded-xl"
         />
         <button
           disabled={!validInput}

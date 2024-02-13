@@ -26,8 +26,11 @@ const Settings = () => {
         <Alert />
         <About />
       </div>
-      <div className={`border-t  pt-6 pb-4 mt-4 ${theme === 'light' ? 'border-t-[#ECEEFC]' : 'border-t-[#3A3C44]'}`}>
-        <p className="text-center text-[#84868D]">V 1.0</p>
+      <div
+        className={`border-t  pt-4 pb-4 mt-4 ${
+          theme === 'light' ? 'border-t-[#ECEEFC] text-[#84868D]' : 'border-t-[#3A3C44] text-white'
+        }`}>
+        <p className="text-center ">V 1.0</p>
       </div>
     </div>
   );
