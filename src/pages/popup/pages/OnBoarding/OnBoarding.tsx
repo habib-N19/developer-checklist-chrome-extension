@@ -41,10 +41,13 @@ const OnBoarding = () => {
     e.preventDefault();
     const createdAt = new Date().toISOString();
     const projectName = e.currentTarget.projectName.value;
-    dispatch(addNewProject({ projectName, createdAt }));
     setValidInput((prev: boolean) => !prev);
-    navigate('/tasks');
+    dispatch(addNewProject({ projectName, createdAt }));
+    const newIndex = projects.initialStateData.length - 1;
+    navigate(`/tasks?id=${newIndex}`);
+    // navigate('/tasks');
   };
+
   return (
     <div className=" max-w-[480px] mx-auto">
       <form onSubmit={handleSubmit} className=" px-[66px] py-10">
@@ -63,7 +66,7 @@ const OnBoarding = () => {
         <button
           disabled={!validInput}
           type="submit"
-          className="disabled:bg-[#136df526] bg-[#136DF5] text-white font-semibold py-3 px-8 w-full rounded-xl
+          className="disabled:bg-[#136df58b] bg-[#136DF5] text-white font-semibold py-3 px-8 w-full rounded-xl
           ">
           Create New
         </button>
@@ -73,7 +76,11 @@ const OnBoarding = () => {
         {projects.initialStateData.map((project: TProject, index: number) => (
           <div key={index} className="grid grid-cols-3 w-full px-8 py-4 justify-between">
             <div className="col-span-2">
-              <button onClick={() => navigate('/tasks')} className="font-semibold text-base">
+              <button
+                onClick={() => {
+                  navigate(`/tasks?id=${index}`);
+                }}
+                className="font-semibold text-base">
                 {project.projectTitle}
               </button>
               <p className="text-[#84868D] text-sm">{new Date(project.createdAt).toLocaleDateString()}</p>

@@ -5,13 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TProject, deleteProject } from '../redux/features/rootTasksSlice';
 import useStorage from '@root/src/shared/hooks/useStorage';
 import exampleThemeStorage from '@root/src/shared/storages/exampleThemeStorage';
-const TasksTab = () => {
+type TTasksTabProps = {
+  id: number;
+};
+const TasksTab = ({ id }: TTasksTabProps) => {
   const navigate = useNavigate();
+  console.log('from task tab', id);
   const dispatch = useDispatch();
   const theme = useStorage(exampleThemeStorage);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const projects = useSelector((state: any) => state.rootTasks);
-  // console.log();
   const handleDeleteProject = (projectTitle: string) => {
     dispatch(deleteProject({ projectTitle }));
     console.log('clicked');
@@ -38,7 +41,7 @@ const TasksTab = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
       </button>
-      <Tabs variant="enclosed" className="" height={'-webkit-fit-content'}>
+      <Tabs defaultIndex={id} variant="enclosed" className="" height={'-webkit-fit-content'}>
         <TabList borderBottom="none" height={'-webkit-fit-content'}>
           {projects.initialStateData.map((project: TProject, index: number) => {
             return (

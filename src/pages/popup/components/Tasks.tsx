@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   TProject,
   TTopic,
@@ -9,6 +9,7 @@ import {
   toggleComplete,
 } from '../redux/features/rootTasksSlice';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -30,19 +31,11 @@ export type TTasksProps = {
 };
 // : React.FC<TTasksProps>
 const Tasks = ({ project }: TTasksProps) => {
-  const [swiper, setSwiper] = useState(null);
+  const [swiper, setSwiper] = useState<SwiperCore | null>(null);
   const theme = useStorage(exampleThemeStorage);
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const count = useSelector((state: any) => state.rootTasks.completedTasksCount);
-  // const initialIndex = useSelector((state: any) => state.rootTasks.sliderIndex);
-  console.log('count', count);
-  console.log('redux tasks pre toggle initial state', project);
-  // useEffect(() => {
-  //   dispatch(loadDataFromLocalStorage());
-  //   // dispatch(completedTasksCount());
-  // }, [dispatch]);
-
+  // const count = useSelector((state: any) => state.rootTasks.completedTasksCount);
   const handleToggleComplete = (projectName: string, topicTitle: string, taskTitle: string, isComplete: boolean) => {
     dispatch(toggleComplete({ projectName, topicTitle, taskTitle, isComplete }));
     // dispatch(completedTasksCount());
@@ -152,27 +145,6 @@ const Tasks = ({ project }: TTasksProps) => {
                   {topic.tasks.map((task, i) => {
                     return (
                       <div key={i} className="flex space-y-8 items-center">
-                        {/* <input
-                          type="checkbox"
-                          checked={task?.isComplete}
-
-                          onChange={() => {
-                            handleToggleComplete(
-                              project.projectTitle,
-                              topic.title,
-                              task.taskTitle,
-                              task.isComplete ? true : false,
-                            );
-                          }}
-                          key={i}
-                          // style={{
-                          //   minHeight: '24px',
-                          //   minWidth: '24px',
-                          //   borderRadius: '29px',
-                          // }}
-                          // className="rounded-lg bg-[#136DF5]"
-                          className='hidden'
-                        /> */}
                         <CustomCheckbox
                           handleChecked={() => {
                             handleToggleComplete(
