@@ -5,6 +5,7 @@ import {
   // completedTasksCount,
   markAllAsComplete,
   markAllAsIncomplete,
+  setSliderIndex,
   toggleComplete,
 } from '../redux/features/rootTasksSlice';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
@@ -20,7 +21,6 @@ import SelectAll from '../ui/SelectAll';
 import DeSelectAll from '../ui/DeSelectAll';
 import Download from '../ui/Download';
 import { PdfGenerator } from '../utils/PdfGenerator';
-// import PdfModal from './PdfModal';
 import CustomCheckbox from '../ui/CustomCheckbox';
 import useStorage from '@root/src/shared/hooks/useStorage';
 import exampleThemeStorage from '@root/src/shared/storages/exampleThemeStorage';
@@ -35,6 +35,7 @@ const Tasks = ({ project }: TTasksProps) => {
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const count = useSelector((state: any) => state.rootTasks.completedTasksCount);
+  // const initialIndex = useSelector((state: any) => state.rootTasks.sliderIndex);
   console.log('count', count);
   console.log('redux tasks pre toggle initial state', project);
   // useEffect(() => {
@@ -42,7 +43,7 @@ const Tasks = ({ project }: TTasksProps) => {
   //   // dispatch(completedTasksCount());
   // }, [dispatch]);
 
-  const handleToggleComplete = (projectName, topicTitle, taskTitle, isComplete) => {
+  const handleToggleComplete = (projectName: string, topicTitle: string, taskTitle: string, isComplete: boolean) => {
     dispatch(toggleComplete({ projectName, topicTitle, taskTitle, isComplete }));
     // dispatch(completedTasksCount());
   };
@@ -75,6 +76,11 @@ const Tasks = ({ project }: TTasksProps) => {
   const handleSwiper = swiper => {
     setSwiper(swiper);
   };
+  const handleSlideChange = swiper => {
+    const activeIndex = swiper.activeIndex;
+    // console.log('in slider change, ', activeIndex, project.projectTitle, 'from selector', initialIndex);
+    dispatch(setSliderIndex({ projectTitle: project.projectTitle, sliderIndex: activeIndex }));
+  };
   const handleDownload = project => {
     console.log('from tasks', project);
     const generatePdf = PdfGenerator({ project });
@@ -93,11 +99,12 @@ const Tasks = ({ project }: TTasksProps) => {
           onSwiper={handleSwiper}
           slidesPerView={1}
           loop={true}
+          initialSlide={project.sliderIndex || 0}
           // navigation
           // pagination={{ clickable: true, el: '.swiper-pagination' }}
           // scrollbar={{ draggable: true }}
           // onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}>
+          onSlideChange={swiper => handleSlideChange(swiper)}>
           {project.topics?.map((topic: TTopic, index) => (
             <SwiperSlide key={index}>
               <div key={index} className="w-full">

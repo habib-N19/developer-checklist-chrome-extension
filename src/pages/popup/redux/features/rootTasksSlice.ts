@@ -14,6 +14,7 @@ export type TTopic = {
 export type TProject = {
   projectTitle: string;
   isStarred?: boolean;
+  sliderIndex: number;
   createdAt: string;
   topics: TTopic[];
 };
@@ -31,8 +32,8 @@ const initialState: TInitialState = {
     {
       projectTitle: 'Webflow Starter',
       isStarred: true,
+      sliderIndex: 0,
       createdAt: new Date().toISOString(),
-
       topics: [
         {
           title: 'Style Guide',
@@ -583,7 +584,7 @@ const rootTasksSlice = createSlice({
     addNewProject: (state, action: PayloadAction<{ projectName: string; createdAt: string }>) => {
       const { projectName, createdAt } = action.payload;
       const initialTopics = state.initialStateData[0].topics;
-      const newProject = { projectTitle: projectName, createdAt, topics: initialTopics };
+      const newProject = { projectTitle: projectName, createdAt, sliderIndex: 0, topics: initialTopics };
       state.initialStateData.push(newProject);
       storeToLocalStorage(state.initialStateData);
     },
@@ -694,6 +695,16 @@ const rootTasksSlice = createSlice({
       // });
       return { ...state, completedTasksCount: count };
     },
+    setSliderIndex: (state, action: PayloadAction<{ projectTitle: string; sliderIndex: number }>) => {
+      const { projectTitle, sliderIndex } = action.payload;
+      state.initialStateData = state.initialStateData.map(project => {
+        if (project.projectTitle === projectTitle) {
+          return { ...project, sliderIndex };
+        }
+        return project;
+      });
+      storeToLocalStorage(state.initialStateData);
+    },
   },
 });
 
@@ -707,5 +718,6 @@ export const {
   completedTasksCount,
   toggleStarred,
   removeFromLocalStorage,
+  setSliderIndex,
 } = rootTasksSlice.actions;
 export default rootTasksSlice.reducer;
